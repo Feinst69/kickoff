@@ -30,6 +30,11 @@ This repository demonstrates an end‑to‑end pipeline for classifying handwrit
    python app.py
    ```
 
+   You can also query the API directly once the server is running:
+   ```bash
+   curl -F 'file=@path/to/image.png' http://localhost:5000/api/predict
+   ```
+
 Running `train.py` performs a grid search over several hyper‑parameters,
 saving the best performing model to `model.h5`. The script also prints a
 confusion matrix and classification report for the final model and stores
