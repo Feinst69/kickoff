@@ -1,15 +1,15 @@
 # Handwritten Digit Classification Project
 
-This repository contains a simple example of classifying handwritten digits using the MNIST dataset.
+This repository demonstrates an end‑to‑end pipeline for classifying handwritten digits from the MNIST dataset. It includes the data exploration notebooks, training scripts and a small Flask application.
 
 ## Structure
 
-- `theoretical_questions.md` – placeholder for theoretical answers extracted from the PDF.
+- `theoretical_questions.md` – answers to theory questions about neural networks.
 - `notebooks/01_exploration.ipynb` – notebook for exploring the data.
-- `notebooks/02_modeling.ipynb` – notebook for training a model.
-- `train.py` – script to train a convolutional neural network and save it as `model.h5`.
-- `predict.py` – script that loads the trained model and predicts the digit of an image provided on the command line.
-- `app.py` – a small Flask web interface to upload an image and see the predicted digit.
+- `notebooks/02_modeling.ipynb` – notebook for training experiments.
+- `train.py` – grid search script that trains both a CNN and a multi-layer perceptron (MLP) and saves the best model as `model.h5`. Training curves are exported as PNG images.
+- `predict.py` – command line prediction script.
+- `app.py` – Flask web interface to upload an image and see the predicted digit.
 
 ## Usage
 
@@ -17,7 +17,7 @@ This repository contains a simple example of classifying handwritten digits usin
    ```bash
    pip install -r requirements.txt
    ```
-2. Train the model:
+2. Train the model with grid search:
    ```bash
    python train.py
    ```
@@ -25,15 +25,12 @@ This repository contains a simple example of classifying handwritten digits usin
    ```bash
    python predict.py path/to/image.png
    ```
-4. Launch the web application:
+4. Launch the web application (now exposing a prediction API):
    ```bash
    python app.py
    ```
 
-## Results
-
-Running `train.py` will train a small CNN for five epochs on MNIST. Accuracy will depend on the runtime environment.
-
-## Conclusion
-
-This project demonstrates a minimal pipeline for loading data, training a model, making predictions via script and web interface, and presenting results.
+Running `train.py` performs a grid search over several hyper‑parameters,
+saving the best performing model to `model.h5`. The script also prints a
+confusion matrix and classification report for the final model and stores
+PNG images of loss and accuracy for each configuration.

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, jsonify, render_template_string
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -31,6 +31,18 @@ def index():
             out = model.predict(img_array)
             pred = int(np.argmax(out))
     return render_template_string(HTML, pred=pred)
+
+
+@app.route('/api/predict', methods=['POST'])
+def api_predict():
+    file = request.files.get('file')
+    if not file:
+        return jsonify({'error': 'no file provided'}), 400
+    img = image.load_img(io.BytesIO(file.read()), target_size=(28, 28), color_mode='grayscale')
+    img_array = image.img_to_array(img).reshape(1, 28, 28, 1) / 255.0
+    out = model.predict(img_array)
+    pred = int(np.argmax(out))
+    return jsonify({'prediction': pred, 'probabilities': out[0].tolist()})
 
 if __name__ == '__main__':
     app.run(debug=True)
